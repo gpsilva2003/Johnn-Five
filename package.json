@@ -1,0 +1,19 @@
+{
+  "name": "firmata",
+  "version": "1.0.0",
+  "description": "Johnny-Five Test Program",
+  "main": "j5-firmata.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "etherport-client": "^0.1.4",
+    "express": "^4.21.1",
+    "johnny-five": "^2.1.0",
+    "keypress": "^0.2.1",
+    "socket.io": "^4.8.0"
+  }
+}

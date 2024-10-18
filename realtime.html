@@ -1,0 +1,24 @@
+<!doctype html>
+<html>  
+<head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.8.0/socket.io.js"></script>
+<script>
+
+    $(function() {
+      var socket = io.connect("http://localhost:8000");
+      var display = $("h1 span");
+      $("#slider").on("input",function() {
+        var val = $(this).val();
+        display.text((1000 / (val * 2)).toFixed(2));
+        socket.emit("interval", val);
+      });
+      });
+</script>
+</head>
+<body>
+  <h1>Piscando com velocidade: <span>0.50</span>Hz</h1>
+  Rapido <input id="slider" type="range" min="100" max="1000" value="1000"> Lento
+</body>
+</html>
+

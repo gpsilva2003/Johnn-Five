@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controle do LED</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.8.0/socket.io.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        h1 {
+            font-size: 24px;
+        }
+        #slider {
+            width: 40%;
+            margin-top: 20px;
+        }
+    </style>
+    <script>
+        $(function() {
+            // Conectar ao servidor Socket.IO
+            var socket = io.connect("http://localhost:8000");
+
+            // Captura o valor do controle deslizante
+            var freqDisplay = $("#freq");
+            $("#slider").on("input", function() {
+                var val = $(this).val();
+
+                // Calcula a frequência em Hz e atualiza o display
+                var frequency = (1000 / (val * 2)).toFixed(2);
+                freqDisplay.text(frequency);
+
+                // Envia o valor de delay (tempo em ms) para o servidor
+                socket.emit('led', { delay: val });
+            });
+
+            // Recebe mensagem do servidor
+            socket.on('news', function(data) {
+                console.log(data.hello);  // Exibe a mensagem recebida no console
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>Piscar LED com frequência: <span id="freq">0.50</span> Hz</h1>
+    <label for="slider">Rápido</label>
+    <input id="slider" type="range" min="100" max="1000" value="500">
+    <label for="slider">Lento</label>
+</body>
+</html>
+
